@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+</head>
+
+<body>
+    <style>
+        #circkle {
+            border-radius: 100%;
+            width: 500px;
+            height: 500px;
+            margin: 100px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url(./04_000000.png);
+            background-size: 500px;
+            background-repeat: no-repeat;
+        }
+
+        #hours {
+            width: 10px;
+            height: 350px;
+            background: linear-gradient(360deg, rgba(189, 189, 189, 0) 50%, rgb(243, 27, 27) 50%);
+            z-index: 1;
+            position: absolute;
+            transition: 10s;
+        }
+
+        #minutes {
+            width: 7px;
+            height: 400px;
+            background: linear-gradient(360deg, rgba(255, 255, 255, 0) 50%, rgb(0, 0, 0) 50%);
+            z-index: 2;
+            position: absolute;
+            transition: 5s;
+        }
+
+        #seconds {
+            width: 3px;
+            height: 450px;
+            background: linear-gradient(360deg, rgba(255, 255, 255, 0) 50%, rgb(44, 12, 228) 50%);
+            position: absolute;
+            z-index: 3;
+            position: absolute;
+            transition: 0.5s;
+        }
+
+        #need {
+            width: 60px;
+            height: 60px;
+            background: black;
+            z-index: 4;
+            border-radius: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 50px;
+        }
+    </style>
+    <div id="circkle">
+        <div id="hours"></div>
+        <div id="minutes"></div>
+        <div id="seconds"></div>
+        <div id="need">A</div>
+    </div>
+    <script>
+        let degresAll = {};
+        let r = 0;
+        let hours = []
+        for (let i = 1; i < 13 * 2; i++) {
+            if (r < 360) {
+                hours.push(r)
+                r += 30;
+            } else {
+            r = 0;
+            hours.push(r)
+            r += 30;
+        }
+        }
+        degresAll.hours = hours;
+        r = 0;
+        let minutes = []
+        for (let i = 1; i < 61; i++) {
+            minutes.push(r)
+            r += 6;
+        }
+        degresAll.minutes = minutes;
+        r = 0;
+        let seconds = []
+        for (let i = 1; i < 61; i++) {
+            seconds.push(r)
+            r += 6;
+        }
+        degresAll.seconds = seconds;
+        r = 0;
+
+        function timeFinder() {
+            let r = 0;
+            let dateF = Date()
+            let timeD = '';
+            for (let i = 0; i < dateF.length; i++) {
+                if (dateF[i] == ' ') {
+                    if (r == 4) {
+                        break;
+                    } else {
+                        timeD += dateF[i]
+                        r++;
+                    }
+                } else {
+                    timeD += dateF[i]
+                }
+            }
+            let timeM = timeD.split("").reverse().join("")
+            let time = '';
+            for (let i = 0; i < timeM.length; i++) {
+                if (timeM[i] == ' ') {
+                    break;
+                } else {
+                    time += timeM[i]
+                }
+            }
+            return time;
+        }
+
+        setInterval(() => {
+            let timeNow = timeFinder();
+            let times = parseInt(timeNow.split(":")[0].split("").reverse().join(""))
+            let seconds = degresAll.seconds[times]
+            document.getElementById("seconds").style.transform = `rotate(${seconds}deg)`;
+            let timeh = parseInt(timeNow.split(":")[2].split("").reverse().join(""))
+            let hours = degresAll.hours[timeh]
+            document.getElementById("hours").style.transform = `rotate(${hours}deg)`;
+            let timem = parseInt(timeNow.split(":")[1].split("").reverse().join(""))
+            let minutes = degresAll.minutes[timem]
+            document.getElementById("minutes").style.transform = `rotate(${minutes}deg)`;
+        }, 1000)
+    </script>
+</body>
+
+</html>
