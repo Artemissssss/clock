@@ -63,6 +63,10 @@
             color: white;
             font-size: 50px;
         }
+        h1{
+            text-align: center;
+            font-size: 100px;
+        }
     </style>
     <div id="circkle">
         <div id="hours"></div>
@@ -70,6 +74,7 @@
         <div id="seconds"></div>
         <div id="need">A</div>
     </div>
+    <h1></h1>
     <script>
         let degresAll = {};
         let r = 0;
@@ -140,6 +145,7 @@
             let timem = parseInt(timeNow.split(":")[1].split("").reverse().join(""))
             let minutes = degresAll.minutes[timem]
             document.getElementById("minutes").style.transform = `rotate(${minutes}deg)`;
+            document.querySelector("h1").textContent = timeNow.split("").reverse().join("")
         }, 1000)
     </script>
 </body>
